@@ -1,0 +1,459 @@
+export interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  category: 'headphones' | 'speakers' | 'earphones';
+  price: number;
+  description: string;
+  features: string;
+  includes: { quantity: number; item: string }[];
+  images: {
+    mobile: string;
+    tablet: string;
+    desktop: string;
+  };
+  gallery: {
+    first: { mobile: string; tablet: string; desktop: string };
+    second: { mobile: string; tablet: string; desktop: string };
+    third: { mobile: string; tablet: string; desktop: string };
+  };
+  others: {
+    slug: string;
+    name: string;
+    image: { mobile: string; tablet: string; desktop: string };
+  }[];
+  new: boolean;
+}
+
+export const products: Product[] = [
+  {
+    id: '1',
+    slug: 'xx99-mark-ii-headphones',
+    name: 'XX99 Mark II Headphones',
+    category: 'headphones',
+    price: 2999,
+    new: true,
+    description: 'The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.',
+    features: `Featuring a genuine leather head strap and premium earcups, these headphones deliver superior comfort for those who like to enjoy endless listening. It includes intuitive controls designed for any situation. Whether you are taking a business call or just in your own personal space, the auto on/off and pause features ensure that you will never miss a beat.
+
+The advanced Active Noise Cancellation with built-in equalizer allow you to experience your audio world on your terms. It lets you enjoy your audio in peace, but quickly interact with your surroundings when you need to. Combined with Bluetooth 5. 0 compliant connectivity and 17 hour battery life, the XX99 Mark II headphones gives you superior sound, cutting-edge technology, and a modern design aesthetic.`,
+    includes: [
+      { quantity: 1, item: 'Headphone unit' },
+      { quantity: 2, item: 'Replacement earcups' },
+      { quantity: 1, item: 'User manual' },
+      { quantity: 1, item: '3.5mm 5m audio cable' },
+      { quantity: 1, item: 'Travel bag' }
+    ],
+    images: {
+      mobile: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400',
+      tablet: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700',
+      desktop: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200'
+    },
+    gallery: {
+      first: {
+        mobile: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400',
+        tablet: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=700',
+        desktop: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600'
+      },
+      second: {
+        mobile: 'https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=400',
+        tablet: 'https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=700',
+        desktop: 'https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=600'
+      },
+      third: {
+        mobile: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=400',
+        tablet: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=700',
+        desktop: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=1200'
+      }
+    },
+    others: [
+      {
+        slug: 'xx99-mark-i-headphones',
+        name: 'XX99 Mark I',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400',
+          tablet: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=700',
+          desktop: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400'
+        }
+      },
+      {
+        slug: 'xx59-headphones',
+        name: 'XX59',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400',
+          tablet: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=700',
+          desktop: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400'
+        }
+      },
+      {
+        slug: 'zx9-speaker',
+        name: 'ZX9 Speaker',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
+          tablet: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700',
+          desktop: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400'
+        }
+      }
+    ]
+  },
+  {
+    id: '2',
+    slug: 'xx99-mark-i-headphones',
+    name: 'XX99 Mark I Headphones',
+    category: 'headphones',
+    price: 1750,
+    new: false,
+    description: 'As the gold standard for headphones, the classic XX99 Mark I offers detailed and accurate audio reproduction for audiophiles, mixing engineers, and music aficionados alike in studios and on the go.',
+    features: `As the headphones all others are measured against, the XX99 Mark I demonstrates over five decades of audio expertise, redefining the critical listening experience. This pair of closed-back headphones are made of industrial, aerospace-grade materials to emphasize durability at a relatively light weight of 11 oz.
+
+From the handcrafted microfiber ear cushions to the robust metal headband with inner damped steel core, the components work together to deliver comfort and uncompromising listening experience.`,
+    includes: [
+      { quantity: 1, item: 'Headphone unit' },
+      { quantity: 2, item: 'Replacement earcups' },
+      { quantity: 1, item: 'User manual' },
+      { quantity: 1, item: '3.5mm 5m audio cable' }
+    ],
+    images: {
+      mobile: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400',
+      tablet: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=700',
+      desktop: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=1200'
+    },
+    gallery: {
+      first: {
+        mobile: 'https://images.unsplash.com/photo-1599669454699-248893623440?w=400',
+        tablet: 'https://images.unsplash.com/photo-1599669454699-248893623440?w=700',
+        desktop: 'https://images.unsplash.com/photo-1599669454699-248893623440?w=600'
+      },
+      second: {
+        mobile: 'https://images.unsplash.com/photo-1577174881658-0f30157f4d9d?w=400',
+        tablet: 'https://images.unsplash.com/photo-1577174881658-0f30157f4d9d?w=700',
+        desktop: 'https://images.unsplash.com/photo-1577174881658-0f30157f4d9d?w=600'
+      },
+      third: {
+        mobile: 'https://images.unsplash.com/photo-1524678714210-9917a6c619c2?w=400',
+        tablet: 'https://images.unsplash.com/photo-1524678714210-9917a6c619c2?w=700',
+        desktop: 'https://images.unsplash.com/photo-1524678714210-9917a6c619c2?w=1200'
+      }
+    },
+    others: [
+      {
+        slug: 'xx99-mark-ii-headphones',
+        name: 'XX99 Mark II',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400',
+          tablet: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700',
+          desktop: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400'
+        }
+      },
+      {
+        slug: 'xx59-headphones',
+        name: 'XX59',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400',
+          tablet: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=700',
+          desktop: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400'
+        }
+      },
+      {
+        slug: 'zx9-speaker',
+        name: 'ZX9 Speaker',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
+          tablet: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700',
+          desktop: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400'
+        }
+      }
+    ]
+  },
+  {
+    id: '3',
+    slug: 'xx59-headphones',
+    name: 'XX59 Headphones',
+    category: 'headphones',
+    price: 899,
+    new: false,
+    description: 'Enjoy your audio almost anywhere and customize it to your specific tastes with the XX59 headphones. The stylish yet durable versatile wireless headset is a brilliant companion at home or on the move.',
+    features: `These headphones have been created from durable, high-quality materials tough enough to take anywhere. Its compact folding design fuses comfort and minimalist style making it perfect for travel. Flawless transmission is assured by the latest wireless technology engineered for audio synchronization with videos.
+
+More than a simple pair of headphones, this headset features a pair of built-in microphones for clear, hands-free calling when paired with a compatible smartphone. Controlling music and calls is also intuitive thanks to easy-access touch buttons on the earcups. Regardless of how you use the XX59 headphones, you can do so all day thanks to an impressive 30-hour battery life that can be rapidly recharged via USB-C.`,
+    includes: [
+      { quantity: 1, item: 'Headphone unit' },
+      { quantity: 2, item: 'Replacement earcups' },
+      { quantity: 1, item: 'User manual' },
+      { quantity: 1, item: '3.5mm 5m audio cable' }
+    ],
+    images: {
+      mobile: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400',
+      tablet: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=700',
+      desktop: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=1200'
+    },
+    gallery: {
+      first: {
+        mobile: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=400',
+        tablet: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=700',
+        desktop: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=600'
+      },
+      second: {
+        mobile: 'https://images.unsplash.com/photo-1491927570842-0261e477d937?w=400',
+        tablet: 'https://images.unsplash.com/photo-1491927570842-0261e477d937?w=700',
+        desktop: 'https://images.unsplash.com/photo-1491927570842-0261e477d937?w=600'
+      },
+      third: {
+        mobile: 'https://images.unsplash.com/photo-1560174038-da43ac74f01b?w=400',
+        tablet: 'https://images.unsplash.com/photo-1560174038-da43ac74f01b?w=700',
+        desktop: 'https://images.unsplash.com/photo-1560174038-da43ac74f01b?w=1200'
+      }
+    },
+    others: [
+      {
+        slug: 'xx99-mark-ii-headphones',
+        name: 'XX99 Mark II',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400',
+          tablet: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700',
+          desktop: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400'
+        }
+      },
+      {
+        slug: 'xx99-mark-i-headphones',
+        name: 'XX99 Mark I',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400',
+          tablet: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=700',
+          desktop: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400'
+        }
+      },
+      {
+        slug: 'zx9-speaker',
+        name: 'ZX9 Speaker',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
+          tablet: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700',
+          desktop: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400'
+        }
+      }
+    ]
+  },
+  {
+    id: '4',
+    slug: 'zx9-speaker',
+    name: 'ZX9 Speaker',
+    category: 'speakers',
+    price: 4500,
+    new: true,
+    description: "Upgrade your sound system with the all new ZX9 active speaker. It's a bookshelf speaker system that offers truly wireless connectivity -- creating new possibilities for more pleasing and practical audio setups.",
+    features: `Connect via Bluetooth or nearly any wired source. This speaker features optical, digital coaxial, USB Type-B, stereo RCA, and stereo XLR inputs, allowing you to have up to five wired source devices connected for easy switching. Improved bluetooth technology offers near lossless audio quality at up to 328ft (100m).
+
+Discover clear, more natural sounding highs than the competition with ZX9's signature planar diaphragm tweeter. Equally important is its powerful room-shaking bass courtesy of a 6.5" aluminum alloy bass unit. You'll be able to enjoy equal sound quality whether in a large room or small den. Furthermore, you will experience new sensations from old songs since it can respond to even the subtle waveforms.`,
+    includes: [
+      { quantity: 2, item: 'Speaker unit' },
+      { quantity: 2, item: 'Speaker cloth panel' },
+      { quantity: 1, item: 'User manual' },
+      { quantity: 1, item: '3.5mm 10m audio cable' },
+      { quantity: 1, item: '10m optical cable' }
+    ],
+    images: {
+      mobile: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
+      tablet: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700',
+      desktop: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=1200'
+    },
+    gallery: {
+      first: {
+        mobile: 'https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=400',
+        tablet: 'https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=700',
+        desktop: 'https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=600'
+      },
+      second: {
+        mobile: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=400',
+        tablet: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=700',
+        desktop: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=600'
+      },
+      third: {
+        mobile: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=400',
+        tablet: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=700',
+        desktop: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=1200'
+      }
+    },
+    others: [
+      {
+        slug: 'zx7-speaker',
+        name: 'ZX7 Speaker',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1531104985437-603d6490e6d4?w=400',
+          tablet: 'https://images.unsplash.com/photo-1531104985437-603d6490e6d4?w=700',
+          desktop: 'https://images.unsplash.com/photo-1531104985437-603d6490e6d4?w=400'
+        }
+      },
+      {
+        slug: 'xx99-mark-i-headphones',
+        name: 'XX99 Mark I',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400',
+          tablet: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=700',
+          desktop: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400'
+        }
+      },
+      {
+        slug: 'xx59-headphones',
+        name: 'XX59',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400',
+          tablet: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=700',
+          desktop: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400'
+        }
+      }
+    ]
+  },
+  {
+    id: '5',
+    slug: 'zx7-speaker',
+    name: 'ZX7 Speaker',
+    category: 'speakers',
+    price: 3500,
+    new: false,
+    description: 'Stream high quality sound wirelessly with minimal loss. The ZX7 bookshelf speaker uses high-end audiophile components that represents the top of the line powered speakers for home or studio use.',
+    features: `Reap the advantages of a flat diaphragm tweeter cone. This provides a fast response rate and excellent high frequencies that lower tiered bookshelf speakers cannot provide. The woofers are made from aluminum that produces a unique and clear sound. XLR inputs allow you to connect to a mixer for more advanced usage.
+
+The ZX7 speaker is the perfect blend of stylish design and high performance. It houses an encased MDF wooden enclosure which minimises acoustic resonance. Dual connectivity allows pairing through bluetooth or traditional optical and RCA input. Switch input sources and control volume at your finger tips with the included wireless remote. This versatile speaker is equipped to deliver an authentic listening experience.`,
+    includes: [
+      { quantity: 2, item: 'Speaker unit' },
+      { quantity: 2, item: 'Speaker cloth panel' },
+      { quantity: 1, item: 'User manual' },
+      { quantity: 1, item: '3.5mm 7.5m audio cable' },
+      { quantity: 1, item: '7.5m optical cable' }
+    ],
+    images: {
+      mobile: 'https://images.unsplash.com/photo-1531104985437-603d6490e6d4?w=400',
+      tablet: 'https://images.unsplash.com/photo-1531104985437-603d6490e6d4?w=700',
+      desktop: 'https://images.unsplash.com/photo-1531104985437-603d6490e6d4?w=1200'
+    },
+    gallery: {
+      first: {
+        mobile: 'https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=400',
+        tablet: 'https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=700',
+        desktop: 'https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=600'
+      },
+      second: {
+        mobile: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
+        tablet: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700',
+        desktop: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600'
+      },
+      third: {
+        mobile: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=400',
+        tablet: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=700',
+        desktop: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=1200'
+      }
+    },
+    others: [
+      {
+        slug: 'zx9-speaker',
+        name: 'ZX9 Speaker',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
+          tablet: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700',
+          desktop: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400'
+        }
+      },
+      {
+        slug: 'xx99-mark-i-headphones',
+        name: 'XX99 Mark I',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400',
+          tablet: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=700',
+          desktop: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400'
+        }
+      },
+      {
+        slug: 'yx1-earphones',
+        name: 'YX1 Earphones',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',
+          tablet: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=700',
+          desktop: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400'
+        }
+      }
+    ]
+  },
+  {
+    id: '6',
+    slug: 'yx1-earphones',
+    name: 'YX1 Wireless Earphones',
+    category: 'earphones',
+    price: 599,
+    new: true,
+    description: 'Tailor your listening experience with bespoke dynamic drivers from the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound even in noisy environments with its active noise cancellation feature.',
+    features: `Experience unrivalled stereo sound thanks to innovative acoustic technology. With improved ergonomics designed for full day wearing, these revolutionary earphones have been finely crafted to provide you with the perfect fit, delivering complete comfort all day long while enjoying exceptional noise isolation and truly immersive sound.
+
+The YX1 Wireless Earphones features customizable controls for volume, music, calls, and voice assistants built into both earbuds. The new 7-hour battery life can be extended up to 28 hours with the charging case, giving you uninterrupted play time. Exquisite craftsmanship with a splash resistant design now available in an all new white and grey color scheme as well as the popular classic black.`,
+    includes: [
+      { quantity: 2, item: 'Earphone unit' },
+      { quantity: 6, item: 'Multi-size earplugs' },
+      { quantity: 1, item: 'User manual' },
+      { quantity: 1, item: 'USB-C charging cable' },
+      { quantity: 1, item: 'Travel pouch' }
+    ],
+    images: {
+      mobile: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',
+      tablet: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=700',
+      desktop: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=1200'
+    },
+    gallery: {
+      first: {
+        mobile: 'https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=400',
+        tablet: 'https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=700',
+        desktop: 'https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=600'
+      },
+      second: {
+        mobile: 'https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?w=400',
+        tablet: 'https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?w=700',
+        desktop: 'https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?w=600'
+      },
+      third: {
+        mobile: 'https://images.unsplash.com/photo-1572536147248-ac43143f9e4f?w=400',
+        tablet: 'https://images.unsplash.com/photo-1572536147248-ac43143f9e4f?w=700',
+        desktop: 'https://images.unsplash.com/photo-1572536147248-ac43143f9e4f?w=1200'
+      }
+    },
+    others: [
+      {
+        slug: 'xx99-mark-i-headphones',
+        name: 'XX99 Mark I',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400',
+          tablet: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=700',
+          desktop: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400'
+        }
+      },
+      {
+        slug: 'xx59-headphones',
+        name: 'XX59',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400',
+          tablet: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=700',
+          desktop: 'https://images.unsplash.com/photo-1528148343865-51218c4a13e6?w=400'
+        }
+      },
+      {
+        slug: 'zx9-speaker',
+        name: 'ZX9 Speaker',
+        image: {
+          mobile: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
+          tablet: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700',
+          desktop: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400'
+        }
+      }
+    ]
+  }
+];
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find(p => p.slug === slug);
+}
+
+export function getProductsByCategory(category: 'headphones' | 'speakers' | 'earphones'): Product[] {
+  return products.filter(p => p.category === category).sort((a, b) => {
+    if (a.new && !b.new) return -1;
+    if (!a.new && b.new) return 1;
+    return b.price - a.price;
+  });
+}
