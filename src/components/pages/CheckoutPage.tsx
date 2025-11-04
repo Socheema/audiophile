@@ -6,6 +6,8 @@ import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { ChevronLeft } from 'lucide-react';
 import { useCart, CartItem } from '../../contexts/CartContext';
+import { useMutation, useAction } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
 import { formatPrice } from '../../lib/utils';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { toast } from 'sonner';
@@ -54,6 +56,10 @@ export function CheckoutPage({ onNavigate, onBack }: CheckoutPageProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [orderId, setOrderId] = useState('');
+
+  // Convex mutation hook to create orders
+  const createOrderMutation = useMutation(api.orders.createOrder);
+  const sendOrderConfirmationEmail = useAction(api.emails.sendOrderConfirmation);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -127,10 +133,51 @@ export function CheckoutPage({ onNavigate, onBack }: CheckoutPageProps) {
         status: 'pending',
       };
 
-      // Save to localStorage for demo
-      localStorage.setItem(`order-${newOrderId}`, JSON.stringify(orderData));
+      // Attempt to save to Convex, fall back to localStorage if it fails
+      let dbId: string | number | null = null;
+      try {
+        console.log('Attempting to save order to Convex:', orderData);
+        dbId = await createOrderMutation(orderData as any);
+        console.log('Order saved to Convex successfully! ID:', dbId);
+        toast.success('Order saved!');
 
-      setOrderId(newOrderId);
+        // Send order confirmation email
+        try {
+          console.log('Sending order confirmation email to:', formData.email);
+          const emailResult = await sendOrderConfirmationEmail({
+            to: formData.email,
+            customerName: formData.name,
+            orderId: newOrderId,
+            orderData: {
+              items: items,
+              totals: totals,
+              shipping: {
+                address: formData.address,
+                city: formData.city,
+                country: formData.country,
+                zip: formData.zip,
+              },
+              timestamp: Date.now(),
+            },
+          });
+          console.log('Order confirmation email sent successfully:', emailResult);
+          toast.success('Order confirmation sent to your email!');
+        } catch (emailError) {
+          console.error('Failed to send order confirmation email:', emailError);
+          toast.error('Order saved but failed to send confirmation email');
+        }
+      } catch (err) {
+        console.error('Convex createOrder failed:', err);
+        toast.error('Convex save failed, using localStorage fallback');
+        try {
+          localStorage.setItem(`order-${newOrderId}`, JSON.stringify(orderData));
+          console.log('Order saved to localStorage as fallback');
+        } catch (e) {
+          console.error('Failed to save order to localStorage', e);
+        }
+      }
+
+      setOrderId(dbId ? String(dbId) : newOrderId);
       setShowConfirmation(true);
 
     } catch (error) {
@@ -144,7 +191,7 @@ export function CheckoutPage({ onNavigate, onBack }: CheckoutPageProps) {
   const handleConfirmationClose = () => {
     clearCart();
     setShowConfirmation(false);
-    onNavigate('order-confirmation', orderId);
+    onNavigate('home');
   };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
@@ -241,7 +288,7 @@ export function CheckoutPage({ onNavigate, onBack }: CheckoutPageProps) {
                         {errors.phone}
                       </p>
                     )}
-                    
+
                   </div>
                 </div>
               </div>

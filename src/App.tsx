@@ -6,11 +6,12 @@ import { CategoryPage } from './components/pages/CategoryPage';
 import { ProductDetailPage } from './components/pages/ProductDetailPage';
 import { CheckoutPage } from './components/pages/CheckoutPage';
 import { OrderConfirmationPage } from './components/pages/OrderConfirmationPage';
+import { OrderPage } from './components/pages/OrderPage';
 import { getProductBySlug } from './data/products';
 import { Toaster } from './components/ui/sonner';
 import { CartProvider } from './contexts/CartContext';
 
-type Page = 'home' | 'headphones' | 'speakers' | 'earphones' | 'product' | 'checkout' | 'order-confirmation';
+type Page = 'home' | 'headphones' | 'speakers' | 'earphones' | 'product' | 'checkout' | 'order-confirmation' | 'order';
 
 interface NavigationState {
   page: Page;
@@ -22,6 +23,24 @@ function App() {
   const [navigationState, setNavigationState] = useState<NavigationState>({ page: 'home' });
   const [history, setHistory] = useState<NavigationState[]>([{ page: 'home' }]);
 
+  // Handle hash-based navigation for email links
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove #
+      if (hash.startsWith('order-')) {
+        const orderId = hash.replace('order-', '');
+        navigate('order', orderId);
+      }
+    };
+
+    // Check initial hash
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   // Scroll to top on page change
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,13 +48,13 @@ function App() {
 
   const navigate = (page: string, slugOrOrderId?: string) => {
     const newState: NavigationState = { page: page as Page };
-    
+
     if (page === 'product') {
       newState.slug = slugOrOrderId;
-    } else if (page === 'order-confirmation') {
+    } else if (page === 'order-confirmation' || page === 'order') {
       newState.orderId = slugOrOrderId;
     }
-    
+
     setNavigationState(newState);
     setHistory(prev => [...prev, newState]);
   };
@@ -99,6 +118,20 @@ function App() {
         );
       }
 
+      case 'order': {
+        if (!navigationState.orderId) {
+          navigate('home');
+          return null;
+        }
+        return (
+          <OrderPage
+            orderId={navigationState.orderId}
+            onNavigate={navigate}
+            onBack={goBack}
+          />
+        );
+      }
+
       default:
         return <HomePage onNavigate={navigate} />;
     }
@@ -108,6 +141,7 @@ function App() {
     <CartProvider>
       <div className="min-h-screen flex flex-col">
         <Header onNavigate={navigate} currentPage={navigationState.page} />
+        {/* removed test CheckoutButton to eliminate white gap between header and pages */}
         <main className="flex-1">
           {renderPage()}
         </main>

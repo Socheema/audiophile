@@ -3,54 +3,27 @@ import { Container } from '../layout/Container';
 import { Button } from '../ui/button';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { formatPrice } from '../../lib/utils';
-import { CartItem } from '../../contexts/CartContext';
+import { ChevronLeft } from 'lucide-react';
+import { useQuery } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
 
-interface OrderData {
+interface OrderPageProps {
   orderId: string;
-  customer: {
-    name: string;
-    email: string;
-    phone: string;
-  };
-  shipping: {
-    address: string;
-    city: string;
-    country: string;
-    zip: string;
-  };
-  items: CartItem[];
-  totals: {
-    subtotal: number;
-    shipping: number;
-    vat: number;
-    grandTotal: number;
-  };
-  paymentMethod: string;
-  timestamp: number;
-  status: string;
+  onNavigate: (page: string) => void;
+  onBack: () => void;
 }
 
-interface OrderConfirmationPageProps {
-  orderId: string;
-  onNavigate: (page: string, orderId?: string) => void;
-}
-
-export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmationPageProps) {
-  const [orderData, setOrderData] = useState<OrderData | null>(null);
+export function OrderPage({ orderId, onNavigate, onBack }: OrderPageProps) {
   const [loading, setLoading] = useState(true);
 
+  // Query order from Convex
+  const order = useQuery(api.orders.getOrderById, { orderId });
+
   useEffect(() => {
-    // In a real app, this would fetch from Supabase
-    const stored = localStorage.getItem(`order-${orderId}`);
-    if (stored) {
-      try {
-        setOrderData(JSON.parse(stored));
-      } catch (e) {
-        console.error('Failed to parse order data:', e);
-      }
+    if (order !== undefined) {
+      setLoading(false);
     }
-    setLoading(false);
-  }, [orderId]);
+  }, [order]);
 
   if (loading) {
     return (
@@ -62,7 +35,7 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
     );
   }
 
-  if (!orderData) {
+  if (!order) {
     return (
       <Container>
         <div className="py-24 text-center space-y-6">
@@ -82,19 +55,22 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
   }
 
   return (
-    <div className="py-12 md:py-24">
+    <div className="py-8 md:py-16">
       <Container>
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-foreground/50 hover:text-primary transition-colors mb-8"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Go Back
+        </button>
+
         <div className="max-w-[800px] mx-auto">
-          {/* Success Icon */}
+          {/* Page Title */}
           <div className="text-center mb-12">
-            <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center mx-auto mb-6">
-              <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h1 className="uppercase mb-4">Order Confirmed!</h1>
+            <h1 className="uppercase mb-4">Order Details</h1>
             <p className="text-foreground/50">
-              Thank you for your purchase. Your order has been received and is being processed.
+              View your order information and status
             </p>
           </div>
 
@@ -104,11 +80,11 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
             <div className="flex justify-between items-start gap-4 pb-6 border-b">
               <div>
                 <p className="text-sm text-foreground/50 uppercase mb-1">Order Number</p>
-                <p className="font-medium">{orderData.orderId}</p>
+                <p className="font-medium">{order.orderId}</p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-foreground/50 uppercase mb-1">Order Date</p>
-                <p className="font-medium">{new Date(orderData.timestamp).toLocaleDateString('en-US', {
+                <p className="font-medium">{new Date(order.timestamp).toLocaleDateString('en-US', {
                   weekday: 'long',
                   year: 'numeric',
                   month: 'long',
@@ -117,7 +93,7 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
               </div>
               <div className="text-right">
                 <p className="text-sm text-foreground/50 uppercase mb-1">Status</p>
-                <p className="text-primary uppercase font-medium">{orderData.status}</p>
+                <p className="text-primary uppercase font-medium">{order.status}</p>
               </div>
             </div>
 
@@ -126,18 +102,18 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
               <div>
                 <h3 className="uppercase mb-4">Customer Information</h3>
                 <div className="space-y-2 text-sm">
-                  <p>{orderData.customer.name}</p>
-                  <p className="text-foreground/50">{orderData.customer.email}</p>
-                  <p className="text-foreground/50">{orderData.customer.phone}</p>
+                  <p>{order.customer.name}</p>
+                  <p className="text-foreground/50">{order.customer.email}</p>
+                  <p className="text-foreground/50">{order.customer.phone}</p>
                 </div>
               </div>
 
               <div>
                 <h3 className="uppercase mb-4">Shipping Address</h3>
                 <div className="space-y-1 text-sm">
-                  <p>{orderData.shipping.address}</p>
-                  <p>{orderData.shipping.city}, {orderData.shipping.zip}</p>
-                  <p>{orderData.shipping.country}</p>
+                  <p>{order.shipping.address}</p>
+                  <p>{order.shipping.city}, {order.shipping.zip}</p>
+                  <p>{order.shipping.country}</p>
                 </div>
               </div>
             </div>
@@ -146,7 +122,7 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
             <div className="pb-6 border-b">
               <h3 className="uppercase mb-6">Order Items</h3>
               <div className="space-y-4">
-                {orderData.items.map((item) => (
+                {order.items.map((item) => (
                   <div key={item.id} className="flex items-center gap-4">
                     <ImageWithFallback
                       src={item.image}
@@ -170,26 +146,26 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-foreground/50 uppercase">Subtotal</span>
-                <span>{formatPrice(orderData.totals.subtotal)}</span>
+                <span>{formatPrice(order.totals.subtotal)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-foreground/50 uppercase">Shipping</span>
-                <span>{formatPrice(orderData.totals.shipping)}</span>
+                <span>{formatPrice(order.totals.shipping)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-foreground/50 uppercase">VAT (Included)</span>
-                <span>{formatPrice(orderData.totals.vat)}</span>
+                <span>{formatPrice(order.totals.vat)}</span>
               </div>
               <div className="flex justify-between pt-3 border-t">
                 <span className="uppercase">Grand Total</span>
-                <span className="text-primary">{formatPrice(orderData.totals.grandTotal)}</span>
+                <span className="text-primary">{formatPrice(order.totals.grandTotal)}</span>
               </div>
             </div>
 
             {/* Payment Method */}
             <div className="pt-6 border-t">
               <p className="text-sm text-foreground/50 uppercase mb-2">Payment Method</p>
-              <p className="capitalize">{orderData.paymentMethod.replace('-', ' ')}</p>
+              <p className="capitalize">{order.paymentMethod?.replace('-', ' ') || 'Not specified'}</p>
             </div>
           </div>
 
@@ -202,13 +178,6 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
               Continue Shopping
             </Button>
             <Button
-              onClick={() => onNavigate('order', orderData.orderId)}
-              variant="outline"
-              className="border-2 border-[#101010] hover:bg-[#101010] hover:text-white"
-            >
-              View Order
-            </Button>
-            <Button
               onClick={() => window.print()}
               variant="outline"
               className="border-2 border-[#101010] hover:bg-[#101010] hover:text-white"
@@ -219,19 +188,19 @@ export function OrderConfirmationPage({ orderId, onNavigate }: OrderConfirmation
 
           {/* Additional Info */}
           <div className="mt-12 p-6 bg-secondary rounded-lg">
-            <h3 className="uppercase mb-4">What's Next?</h3>
+            <h3 className="uppercase mb-4">Order Status Information</h3>
             <div className="space-y-3 text-sm text-foreground/50">
               <p>
-                • You will receive an email confirmation shortly with your order details.
+                • Your order is currently <strong className="text-primary">{order.status}</strong>
               </p>
               <p>
-                • Your order will be shipped within 2-3 business days.
+                • You will receive updates via email as your order progresses
               </p>
               <p>
-                • You can track your order status using the order number provided.
+                • Estimated delivery time is 2-3 business days from processing
               </p>
               <p>
-                • If you have any questions, please contact our customer support.
+                • If you have any questions, please contact our customer support with your order number
               </p>
             </div>
           </div>

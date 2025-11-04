@@ -94,8 +94,8 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
       </Container>
 
       {/* Cart Modal */}
-      <CartModal 
-        open={cartOpen} 
+      <CartModal
+        open={cartOpen}
         onClose={() => setCartOpen(false)}
         onNavigate={onNavigate}
       />
