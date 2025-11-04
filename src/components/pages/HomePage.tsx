@@ -21,20 +21,29 @@ export function HomePage({ onNavigate }: HomePageProps) {
     <div className="pb-24">
       {/* Hero Section */}
       <div
-        className="bg-[#191919] -mt-8 bg-cover bg-center bg-no-repeat relative min-h-[500px] md:min-h-[600px]"
+        className="relative min-h-[600px] flex items-center overflow-hidden bg-[#0E0E0E]"
         style={{
-          backgroundImage: featuredProduct?.images.desktop
-            ? `url('${featuredProduct.images.desktop}')`
-            : `url('/assets/home/desktop/image-hero.jpg')`,
+          backgroundImage: `url('${
+            featuredProduct?.images.desktop ||
+            "/assets/home/desktop/image-hero.jpg"
+          }')`,
+          backgroundSize: "cover",
+          backgroundPosition: "right center",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: "#0E0E0E",
         }}
       >
+        {/* Overlay for text contrast */}
+        <div className="absolute inset-0 bg-[#0E0E0E]/60" />
+
+        {/* Content */}
         <Container>
-          <div className="relative z-10 py-20 md:py-32 text-center md:text-left justify-between">
-            <div className="max-w-[400px] mx-auto md:mx-0 space-y-6">
+          <div className="relative z-10 py-20 md:py-32 text-left">
+            <div className="max-w-[400px] space-y-6">
               <p className="text-white/50 tracking-[0.6em] uppercase">
                 New Product
               </p>
-              <h1 className="text-white uppercase">
+              <h1 className="text-white uppercase leading-tight">
                 XX99 Mark II
                 <br />
                 Headphones
@@ -58,34 +67,21 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
           {/* Headphones */}
-          {/* <div className="flex flex-col bg-secondary rounded-lg p-6 text-center cursor-pointer hover:shadow-lg transition-shadow w-[350px] h-[204px] relative border border-red-500">
-            <div className=" absolute top-50 left-1/2   ">
-             className="bg-secondary rounded-lg p-6 text-center group cursor-pointer hover:shadow-lg transition-shadow"
-
+         <div className="bg-secondary rounded-lg p-6 text-center group cursor-pointer hover:shadow-lg transition-shadow">
+            <div className="h-40 flex items-center justify-center mb-4">
+              <ImageWithFallback
+                src="/assets/shared/desktop/image-category-thumbnail-headphones.png"
+                alt="headphones"
+                className="w-32 h-32 object-contain"
+              />
             </div>
-            <h3 className="uppercase mb-4">Headphones</h3>
-            <button
-              onClick={() => onNavigate("headphones")}
-              className="text-foreground/50 hover:text-primary inline-flex items-center gap-2 uppercase tracking-wider"
-            >
-              Shop <ChevronRight className="w-4 h-4" />
-            </button>
-          </div> */}
-
-          <div className=" flex flex-col border-2 border-red-500 bg-secondary rounded-lg p-6 cursor-pointer hover:shadow-lg transition-shadow relative">
-            <img
-              src="/assets/shared/desktop/image-category-thumbnail-headphones.png"
-              alt="Speakers"
-              className="w-42  object-contain absolute top-[50]"
-            />
-              <h3 className="uppercase mb-4">Speakers</h3>
+            <h3 className="uppercase mb-4">headphones</h3>
             <button
               onClick={() => onNavigate("speakers")}
               className="text-foreground/50 hover:text-primary inline-flex items-center gap-2 uppercase tracking-wider"
             >
               Shop <ChevronRight className="w-4 h-4" />
             </button>
-
           </div>
 
           {/* Speakers */}
@@ -158,7 +154,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   See Product
                 </Button>
               </div>
-
             </div>
           </div>
 

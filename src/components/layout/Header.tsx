@@ -24,7 +24,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
   ];
 
   return (
-    <header className="bg-[#101010] border-b border-white/10">
+    <header className="bg-[#101010]">
       <Container>
         <div className="flex items-center justify-between py-8">
           {/* Mobile Menu Button */}
