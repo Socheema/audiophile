@@ -21,13 +21,15 @@ export function HomePage({ onNavigate }: HomePageProps) {
     <div className="pb-24">
       {/* Hero Section */}
       <div
-        className="bg-[#101010] -mt-8 bg-cover bg-center"
+        className="bg-[#191919] -mt-8 bg-cover bg-center bg-no-repeat relative min-h-[500px] md:min-h-[600px]"
         style={{
-          backgroundImage: "url('/src/assets/home/desktop/image-hero.jpg')",
+          backgroundImage: featuredProduct?.images.desktop
+            ? `url('${featuredProduct.images.desktop}')`
+            : `url('/assets/home/desktop/image-hero.jpg')`,
         }}
       >
         <Container>
-          <div className="py-20 md:py-32 text-center md:text-left justify-between">
+          <div className="relative z-10 py-20 md:py-32 text-center md:text-left justify-between">
             <div className="max-w-[400px] mx-auto md:mx-0 space-y-6">
               <p className="text-white/50 tracking-[0.6em] uppercase">
                 New Product
@@ -72,7 +74,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
           <div className=" flex flex-col border-2 border-red-500 bg-secondary rounded-lg p-6 cursor-pointer hover:shadow-lg transition-shadow relative">
             <img
-              src="/src/assets/shared/desktop/image-category-thumbnail-headphones.png"
+              src="/assets/shared/desktop/image-category-thumbnail-headphones.png"
               alt="Speakers"
               className="w-42  object-contain absolute top-[50]"
             />
@@ -90,7 +92,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <div className="bg-secondary rounded-lg p-6 text-center group cursor-pointer hover:shadow-lg transition-shadow">
             <div className="h-40 flex items-center justify-center mb-4">
               <ImageWithFallback
-                src="/src/assets/shared/desktop/image-category-thumbnail-speakers.png"
+                src="/assets/shared/desktop/image-category-thumbnail-speakers.png"
                 alt="Speakers"
                 className="w-32 h-32 object-contain"
               />
@@ -108,7 +110,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <div className="bg-secondary rounded-lg p-6 text-center group cursor-pointer hover:shadow-lg transition-shadow">
             <div className="h-40 flex items-center justify-center mb-4">
               <ImageWithFallback
-                src="/src/assets/shared/desktop/image-category-thumbnail-earphones.png"
+                src="/assets/shared/desktop/image-category-thumbnail-earphones.png"
                 alt="Earphones"
                 className="w-32 h-32 object-contain"
               />
@@ -133,7 +135,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="relative">
                 <div className="absolute left-8 top-0 w-[410.234px] h-[493px]">
                   <ImageWithFallback
-                    src="/src/assets/home/desktop/image-removebg-preview.png"
+                    src="/assets/home/desktop/image-removebg-preview.png"
                     alt="ZX9 Speaker"
                     style={{ objectFit: "contain" }}
                   />
@@ -175,7 +177,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </div>
               <div className="flex justify-center">
                 <ImageWithFallback
-                  src="/src/assets/home/desktop/image-speaker-zx7.jpg"
+                  src="/assets/home/desktop/image-speaker-zx7.jpg"
                   alt="ZX7 Speaker"
                   className=" h-auto  object-cover"
                 />
@@ -187,7 +189,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-secondary rounded-lg overflow-hidden h-64">
               <ImageWithFallback
-                src="/src/assets/home/desktop/image-earphones-yx1.jpg"
+                src="/assets/home/desktop/image-earphones-yx1.jpg"
                 alt="YX1 Earphones"
                 className="w-full h-full object-cover"
               />
@@ -226,7 +228,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </div>
           <div className="order-1 md:order-2">
             <img
-              src="/src/assets/shared/desktop/image-best-gear.jpg"
+              src="/assets/shared/desktop/image-best-gear.jpg"
               alt="Best audio gear"
               className="oject-cover w-[540px] h-[588px] shrink-0 rounded-lg bg-[#f1f1f1]"
             />
